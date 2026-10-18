@@ -89,13 +89,40 @@ export function simplifyEvent(event) {
   }
 }
 
+// The date inputs give "2026-10-18". Turn the "from" date into the start of that day,
+// but never earlier than right now, so past events are not shown.
+// We use Ticketmaster's "localStartDateTime" (no "Z" at the end). The plain
+// "startDateTime" also returns long-running events that began years ago
+// whenever an end date is given.
+function startOfDay(dateString) {
+  const now = toApiDate(new Date()).slice(0, -1)
+  if (!dateString) {
+    return now
+  }
+  const chosen = `${dateString}T00:00:00`
+  return chosen > now ? chosen : now
+}
+
+function endOfDay(dateString) {
+  return dateString ? `${dateString}T23:59:59Z` : ''
+}
+
 // Search for events. Every option is optional.
-export async function searchEvents({ keyword, category, city, startDate, page = 0, size = 12 } = {}) {
+export async function searchEvents({
+  keyword,
+  category,
+  city,
+  startDate,
+  endDate,
+  page = 0,
+  size = 12,
+} = {}) {
   const data = await request('/events.json', {
     keyword,
     classificationName: category,
     city,
-    startDateTime: startDate || toApiDate(new Date()),
+    localStartDateTime: startOfDay(startDate),
+    endDateTime: endOfDay(endDate),
     sort: 'date,asc',
     page,
     size,
@@ -112,4 +139,18 @@ export async function searchEvents({ keyword, category, city, startDate, page = 
 export async function getEventById(id) {
   const data = await request(`/events/${id}.json`)
   return simplifyEvent(data)
+}
+
+// Get the main event categories (Music, Sports, Arts & Theatre...).
+// Ticketmaster calls these "segments" inside its classifications list.
+export async function getCategories() {
+  const data = await request('/classifications.json', { size: 50 })
+  const classifications = data._embedded?.classifications || []
+
+  const names = classifications
+    .map((item) => cleanName(item.segment?.name))
+    .filter(Boolean)
+
+  // Remove duplicates and sort A-Z.
+  return [...new Set(names)].sort()
 }
