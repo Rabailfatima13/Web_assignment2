@@ -72,9 +72,9 @@ function Events() {
 
   return (
     <section className="page">
-      <div className="page-header">
+      <div className="hero">
         <h1>Upcoming Events</h1>
-        <p>Find concerts, sports, theatre and more.</p>
+        <p>Find concerts, sports, theatre and more, all in one place.</p>
       </div>
 
       <div className="search-panel">

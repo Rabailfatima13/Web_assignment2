@@ -1,11 +1,18 @@
 :root {
   --text: #4b5563;
-  --text-h: #111827;
-  --bg: #ffffff;
-  --surface: #f9fafb;
-  --border: #e5e7eb;
+  --text-h: #1e1b4b;
+  --bg: #f8f7ff;
+  --surface: #ffffff;
+  --border: #e4e1f5;
   --accent: #7c3aed;
   --accent-bg: rgba(124, 58, 237, 0.1);
+
+  /* Extra colours used across the app */
+  --accent-2: #ec4899;
+  --accent-3: #06b6d4;
+  --gradient: linear-gradient(135deg, #7c3aed 0%, #db2777 55%, #f97316 100%);
+  --gradient-soft: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(236, 72, 153, 0.12));
+  --date: #db2777;
 
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
@@ -16,13 +23,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --surface: #1f2028;
-    --border: #2e303a;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
+    --text: #a5a3c2;
+    --text-h: #f5f3ff;
+    --bg: #0f0d1f;
+    --surface: #1a1730;
+    --border: #2d2950;
+    --accent: #a78bfa;
+    --accent-bg: rgba(167, 139, 250, 0.15);
+    --accent-2: #f472b6;
+    --accent-3: #22d3ee;
+    --gradient: linear-gradient(135deg, #7c3aed 0%, #db2777 55%, #f97316 100%);
+    --gradient-soft: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(219, 39, 119, 0.18));
+    --date: #f472b6;
   }
 }
 

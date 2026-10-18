@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { formatEventDate } from '../utils/formatDate.js'
+import { getCategoryClass } from '../utils/categoryColors.js'
 
 // "children" lets a page add extra content under the card, such as a Cancel button.
 // It sits outside the link, because a button cannot go inside a link.
@@ -7,7 +8,7 @@ function EventCard({ event, children }) {
   const location = [event.city, event.country].filter(Boolean).join(', ')
 
   return (
-    <article className="event-card">
+    <article className={`event-card ${getCategoryClass(event.category)}`}>
       <Link to={`/events/${event.id}`} className="event-card-link">
         <div className="event-card-image">
           {event.image ? (

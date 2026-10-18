@@ -5,6 +5,7 @@ import Loader from '../components/Loader.jsx'
 import ErrorMessage from '../components/ErrorMessage.jsx'
 import RegistrationButton from '../components/RegistrationButton.jsx'
 import { formatEventDate } from '../utils/formatDate.js'
+import { getCategoryClass } from '../utils/categoryColors.js'
 import {
   fetchEventById,
   selectSelectedEvent,
@@ -97,7 +98,7 @@ function EventDetails() {
       <div className="details-layout">
         <div className="details-main">
           <div className="details-tags">
-            <span className="tag">{event.category}</span>
+            <span className={`tag ${getCategoryClass(event.category)}`}>{event.category}</span>
             {event.genre && <span className="tag tag-light">{event.genre}</span>}
             {statusLabel && (
               <span className={`tag tag-status tag-${event.status}`}>{statusLabel}</span>

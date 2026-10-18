@@ -1,3 +1,5 @@
+import { getCategoryClass } from '../utils/categoryColors.js'
+
 // A row of buttons to pick one category. An empty string means "All".
 function CategoryChips({ categories, selected, onSelect }) {
   const options = ['', ...categories]
@@ -8,7 +10,9 @@ function CategoryChips({ categories, selected, onSelect }) {
         <button
           key={category || 'all'}
           type="button"
-          className={category === selected ? 'chip chip-active' : 'chip'}
+          className={`chip ${category ? getCategoryClass(category) : 'cat-all'} ${
+            category === selected ? 'chip-active' : ''
+          }`}
           aria-pressed={category === selected}
           onClick={() => onSelect(category)}
         >

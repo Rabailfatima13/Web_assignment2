@@ -186,7 +186,7 @@
 /* Event grid and cards */
 .event-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
   gap: 20px;
 }
 
@@ -740,4 +740,208 @@
 a.btn {
   display: inline-block;
   text-decoration: none;
+}
+
+/* ===================== Color theme ===================== */
+
+/* One colour per category. Anything with a cat-* class can use var(--cat-color). */
+.cat-music { --cat-color: #ec4899; --cat-bg: rgba(236, 72, 153, 0.14); }
+.cat-sports { --cat-color: #10b981; --cat-bg: rgba(16, 185, 129, 0.14); }
+.cat-arts-theatre { --cat-color: #f59e0b; --cat-bg: rgba(245, 158, 11, 0.16); }
+.cat-film { --cat-color: #3b82f6; --cat-bg: rgba(59, 130, 246, 0.14); }
+.cat-miscellaneous { --cat-color: #06b6d4; --cat-bg: rgba(6, 182, 212, 0.14); }
+.cat-other { --cat-color: #8b5cf6; --cat-bg: rgba(139, 92, 246, 0.14); }
+.cat-all { --cat-color: #7c3aed; --cat-bg: rgba(124, 58, 237, 0.12); }
+
+/* Navbar: gradient logo and a thin colourful line underneath */
+.navbar {
+  background: var(--surface);
+  border-bottom: none;
+  box-shadow: 0 1px 0 var(--border);
+  position: relative;
+}
+
+.navbar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 3px;
+  background: var(--gradient);
+}
+
+.navbar-brand {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--gradient);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(219, 39, 119, 0.25);
+}
+
+.btn-primary:hover {
+  opacity: 1;
+  filter: brightness(1.08);
+}
+
+.btn-primary:disabled {
+  filter: grayscale(0.6);
+  box-shadow: none;
+}
+
+/* Hero banner on the Events page */
+.hero {
+  margin-bottom: 24px;
+  padding: 36px 32px;
+  border-radius: 20px;
+  background: var(--gradient);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -60px;
+  top: -90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.hero h1 {
+  position: relative;
+  margin: 0 0 6px;
+  font-size: 2.4rem;
+  color: #ffffff;
+}
+
+.hero p {
+  position: relative;
+  margin: 0;
+  font-size: 1.05rem;
+  opacity: 0.92;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 24px 20px;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Category chips use their own colour */
+.chip {
+  border-color: var(--cat-bg);
+  background: var(--cat-bg);
+  color: var(--cat-color);
+  font-weight: 600;
+}
+
+.chip:hover {
+  border-color: var(--cat-color);
+  color: var(--cat-color);
+}
+
+.chip-active,
+.chip-active:hover {
+  background: var(--cat-color);
+  border-color: var(--cat-color);
+  color: #ffffff;
+}
+
+/* Event cards: coloured strip on top, coloured badge and glow on hover */
+.event-card {
+  border-top: 4px solid var(--cat-color, var(--accent));
+}
+
+.event-card:hover {
+  border-color: var(--cat-color, var(--accent));
+  box-shadow: 0 12px 28px -8px var(--cat-color, var(--accent));
+}
+
+.badge {
+  background: var(--cat-color, var(--accent));
+}
+
+.event-card-date {
+  color: var(--date);
+}
+
+/* Event details tags */
+.tag {
+  background: var(--cat-color, var(--accent));
+}
+
+/* Search box and filter panel */
+.search-bar input:focus,
+.filter-field input:focus,
+.form-group input:focus {
+  outline-color: var(--accent-2);
+}
+
+.filters {
+  background: var(--gradient-soft);
+}
+
+/* Login / register card */
+.auth-form {
+  border-top: 4px solid transparent;
+  border-image: var(--gradient) 1;
+  border-radius: 0 0 12px 12px;
+}
+
+/* My Events tabs and navbar counter */
+.tab-active {
+  color: var(--accent-2);
+  border-bottom-color: var(--accent-2);
+}
+
+.nav-count {
+  background: var(--accent-2);
+}
+
+.navbar-links a.active {
+  background: var(--gradient-soft);
+}
+
+/* Details page sidebar */
+.details-sidebar {
+  border-top: 4px solid transparent;
+  border-image: var(--gradient) 1;
+  border-radius: 0 0 12px 12px;
+}
+
+.results-count {
+  color: var(--text-h);
+}
+
+/* Keep the lighter genre and status tags readable (two classes beat the .tag rule above) */
+.tag.tag-light {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.tag.tag-status {
+  background: rgba(22, 163, 74, 0.15);
+  color: #16a34a;
+}
+
+.tag.tag-cancelled,
+.tag.tag-canceled,
+.tag.tag-offsale,
+.tag.tag-postponed {
+  background: rgba(220, 38, 38, 0.12);
+  color: #dc2626;
 }
