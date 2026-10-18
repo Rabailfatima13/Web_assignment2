@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { searchEvents, getCategories } from '../../api/ticketmaster.js'
+import { searchEvents, getCategories, getEventById } from '../../api/ticketmaster.js'
 
 // createAsyncThunk handles the three stages of a request for us:
 // pending (started), fulfilled (worked) and rejected (failed).
@@ -9,6 +9,10 @@ export const fetchEvents = createAsyncThunk('events/fetchEvents', async (params)
 
 export const fetchCategories = createAsyncThunk('events/fetchCategories', async () => {
   return getCategories()
+})
+
+export const fetchEventById = createAsyncThunk('events/fetchEventById', async (id) => {
+  return getEventById(id)
 })
 
 const emptyFilters = {
@@ -35,6 +39,10 @@ const initialState = {
   currentPage: 0,
   categories: [],
   categoriesStatus: 'idle',
+  // The single event shown on the Event Details page.
+  selectedEvent: null,
+  selectedStatus: 'idle',
+  selectedError: null,
 }
 
 const eventsSlice = createSlice({
@@ -87,6 +95,19 @@ const eventsSlice = createSlice({
         // The page still works without the category list, so we only note the failure.
         state.categoriesStatus = 'failed'
       })
+      .addCase(fetchEventById.pending, (state) => {
+        state.selectedStatus = 'loading'
+        state.selectedError = null
+        state.selectedEvent = null
+      })
+      .addCase(fetchEventById.fulfilled, (state, action) => {
+        state.selectedStatus = 'succeeded'
+        state.selectedEvent = action.payload
+      })
+      .addCase(fetchEventById.rejected, (state, action) => {
+        state.selectedStatus = 'failed'
+        state.selectedError = action.error.message || 'Could not load this event.'
+      })
   },
 })
 
@@ -99,5 +120,8 @@ export const selectEventsPage = (state) => state.events.page
 export const selectFilters = (state) => state.events.filters
 export const selectCurrentPage = (state) => state.events.currentPage
 export const selectCategories = (state) => state.events.categories
+export const selectSelectedEvent = (state) => state.events.selectedEvent
+export const selectSelectedStatus = (state) => state.events.selectedStatus
+export const selectSelectedError = (state) => state.events.selectedError
 
 export default eventsSlice.reducer

@@ -19,7 +19,13 @@ async function request(path, params = {}) {
     }
   })
 
-  const response = await fetch(`${BASE_URL}${path}?${query.toString()}`)
+  let response
+  try {
+    response = await fetch(`${BASE_URL}${path}?${query.toString()}`)
+  } catch {
+    // fetch only throws when no response arrives at all (offline, blocked request...).
+    throw new Error('Could not connect to Ticketmaster. Check your internet connection and try again.')
+  }
 
   if (response.status === 429) {
     throw new Error('Too many requests. Please wait a moment and try again.')
@@ -137,8 +143,20 @@ export async function searchEvents({
 
 // Get one event by its Ticketmaster id.
 export async function getEventById(id) {
-  const data = await request(`/events/${id}.json`)
-  return simplifyEvent(data)
+  try {
+    const data = await request(`/events/${id}.json`)
+    return simplifyEvent(data)
+  } catch (error) {
+    if (error.message.startsWith('Too many requests')) {
+      throw error
+    }
+    // Ticketmaster's "not found" reply is blocked by the browser (no CORS header),
+    // so a wrong id and a network problem look the same to us.
+    throw new Error(
+      "We couldn't load this event. The link may be wrong, the event may have been removed, or your connection may be down.",
+      { cause: error },
+    )
+  }
 }
 
 // Get the main event categories (Music, Sports, Arts & Theatre...).
