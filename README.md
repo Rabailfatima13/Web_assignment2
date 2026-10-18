@@ -20,19 +20,32 @@ An Event Management System built with **React**, **Redux Toolkit** and **React R
 
 ## 📸 Screenshots
 
+<p align="center">
+  <img src="docs/screenshots/events.webp" alt="Events page with gradient banner, colourful category chips and filters" />
+  <br />
+  <b>Browse & filter events</b><br />
+  <sub>Gradient hero banner, colour-coded category chips, keyword search, city and date filters</sub>
+</p>
+
 <table>
   <tr>
-    <td align="center" width="50%">
-      <img src="docs/screenshots/events.png" alt="Events page with search, category chips and filters" />
+    <td align="center" width="33%">
+      <img src="docs/screenshots/login.png" alt="Login page" />
       <br />
-      <b>Browse & filter events</b><br />
-      <sub>Keyword search, category chips, city and date range</sub>
+      <b>Log in</b><br />
+      <sub>Redirects you back after login</sub>
     </td>
-    <td align="center" width="50%">
-      <img src="docs/screenshots/register.png" alt="Create account form" />
+    <td align="center" width="33%">
+      <img src="docs/screenshots/register.png" alt="Create account page" />
       <br />
       <b>Create an account</b><br />
-      <sub>Validated form, saved with Redux + localStorage</sub>
+      <sub>Validated form, saved with Redux</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/my-events.png" alt="My Events page with Upcoming and Completed tabs" />
+      <br />
+      <b>My Events</b><br />
+      <sub>Upcoming and Completed tabs</sub>
     </td>
   </tr>
 </table>
@@ -77,7 +90,7 @@ An Event Management System built with **React**, **Redux Toolkit** and **React R
   </tr>
 </table>
 
-**Also included:** loading spinners, friendly error messages with *Try again*, form validation, 404 page, responsive layout for phones, and automatic light/dark mode.
+**Also included:** loading spinners, friendly error messages with *Try again*, form validation, 404 page, responsive layout for phones, automatic light/dark mode, and a colourful theme where every category has its own colour.
 
 ---
 
